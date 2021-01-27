@@ -1,36 +1,29 @@
-var root = document.body;
-var count = 0;
+var headerNode = document.getElementById("header");
+var contentNode = document.getElementById("content");
+var Header = require("../views/header");
+var Content = require("../views/content");
 
-var increment = function () {
-  m.request({
-    method: "PUT",
-    url: "//rem-rest-api.herokuapp.com/api/tutorial/1",
-    body: { count: count + 1 },
-    withCredentials: true,
-  }).then(function (data) {
-    count = parseInt(data.count);
-  });
-};
+//to mount multiple component
+var Layout = {
+  oninit: () => {
+    m.mount(header, Header);
+  },
 
-var Hello = {
-  view: function () {
-    return m("main", [
-      m(
-        "h1",
-        {
-          class: "title",
-        },
-        "My first app"
-      ),
-      m(
-        "button",
-        {
-          onclick: increment,
-        },
-        count + " clicks"
-      ),
-    ]);
+  // run on every route change:
+  view: (vnode) => {
+    return m("div", { class: "main-content" }, vnode.children);
   },
 };
 
-m.mount(root, Hello);
+m.route(content, "/", {
+  // using RouteResolver
+  "/": {
+    render: () => {
+      return m(Layout, m(Content));
+    },
+    onmatch: () => {
+      // this will be called on route change, so update your mounted components as needed
+      // console.log("ca marche");
+    },
+  },
+});
