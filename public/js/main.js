@@ -20,13 +20,3 @@ const shuffleArray = (array) => {
 
   return array;
 };
-
-const imageLoader = (elem, src) => {
-  console.log(elem.src);
-  var image = elem;
-  var downloadingImage = new Image();
-  downloadingImage.onload = function () {
-    image.src = this.src;
-  };
-  downloadingImage.src = src;
-};

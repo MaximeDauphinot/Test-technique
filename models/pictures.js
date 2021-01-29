@@ -1,33 +1,12 @@
-const PictureDisplay = require("../views/picturesDisplay");
-
-const shuffle = (array) => {
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-};
-
 var Picture = {
   page: 1,
   list: [],
+  loadedImage: [],
   loadList: () => {
     return m
       .request({
         method: "GET",
-        url: "https://picsum.photos/v2/list?limit=20&page=" + Picture.page,
+        url: "https://picsum.photos/v2/list?limit=30&page=" + Picture.page,
       })
       .then((result) => {
         Picture.page += 1;
@@ -38,15 +17,16 @@ var Picture = {
       });
   },
   infiniteScroll: () => {
-    document.querySelector(".main-content").addEventListener(
+    var container = document.querySelector(".main-content");
+    container.addEventListener(
       "scroll",
       () => {
-        var scrollTop = document.querySelector(".main-content").scrollTop;
-        var scrollHeight = document.querySelector(".main-content").scrollHeight;
-        var offsetHeight = document.querySelector(".main-content").offsetHeight;
+        var scrollTop = container.scrollTop;
+        var scrollHeight = container.scrollHeight;
+        var offsetHeight = container.offsetHeight;
         var contentHeight = scrollHeight - offsetHeight;
 
-        if (contentHeight <= scrollTop) {
+        if (contentHeight - 1000 <= scrollTop) {
           Picture.loadList();
         }
       },

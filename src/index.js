@@ -23,7 +23,7 @@ m.route(content, "/", {
     },
     onmatch: () => {
       // this will be called on route change, so update your mounted components as needed
-      // console.log("ca marche");
+      console.log("ca marche");
     },
   },
 });

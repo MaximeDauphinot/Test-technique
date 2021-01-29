@@ -7,12 +7,11 @@ var Content = {
   view: () =>
     m("div", { class: "content" }, [
       m("h1", "Grid Image Gallery"),
-      m("button", { onclick: Picture.loadList }, "Change Layout"),
       m(PictureDisplay),
       m("img", {
         alt: "loading.gif",
         src: "/public/css/loading.gif",
-        style: { marginTop: 400 },
+        style: { marginTop: 200, maxWidth: "50px" },
       }),
     ]),
 };
